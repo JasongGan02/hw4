@@ -308,7 +308,7 @@ bool
 BinarySearchTree<Key, Value>::iterator::operator==(
     const BinarySearchTree<Key, Value>::iterator& rhs) const
 {
-    return this->current_->getValue() == rhs.current_->getValue();
+    return this->current_ == rhs.current_;
 }
 
 /**
@@ -320,7 +320,7 @@ bool
 BinarySearchTree<Key, Value>::iterator::operator!=(
     const BinarySearchTree<Key, Value>::iterator& rhs) const
 {
-    return this->current_->getValue() != rhs.current_->getValue();
+    return this->current_ != rhs.current_;
 
 }
 
@@ -353,7 +353,6 @@ BinarySearchTree<Key, Value>::iterator::operator++()
         }
         this->current_ = parent;
     }
-    
     return *this;
 
 }
@@ -407,7 +406,7 @@ void BinarySearchTree<Key, Value>::print() const
 */
 template<class Key, class Value>
 typename BinarySearchTree<Key, Value>::iterator
-BinarySearchTree<Key, Value>::begin() const
+BinarySearchTree<Key, Value>::  begin() const
 {
     BinarySearchTree<Key, Value>::iterator begin(getSmallestNode());
     return begin;
@@ -525,6 +524,8 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
     Node<Key, Value>* child = (current->getLeft() != nullptr) ? current->getLeft() : current->getRight();
 
     if (current == root_) {
+        if (child != nullptr)
+            child->setParent(nullptr);
         root_ = child;
     } 
     else 
@@ -542,7 +543,7 @@ void BinarySearchTree<Key, Value>::remove(const Key& key)
             child->setParent(parent);
         }
     }
-
+    
     delete current;
 }
 
