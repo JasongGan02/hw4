@@ -353,6 +353,7 @@ BinarySearchTree<Key, Value>::iterator::operator++()
         }
         this->current_ = parent;
     }
+
     return *this;
 
 }
